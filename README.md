@@ -12,40 +12,27 @@ easy to use functions like javascript.
 
 ## ex.
 
-* ignore `const &`
-
 ```cpp
-bbb::opt_arg_function<void(const std::string &)> f = [](std::string str) { std::cout << str << std::endl; };
-```
-
-* discard arg with no parameter
-
-```cpp
-f = [] { std::cout << "foo" << std::endl; };
-```
-
-* call with extra arguments
-
-```cpp
-f("hoge", 1, 2, 3, "blah", "brah", "blur");
-```
-
-* convertible type (but you will get warning now...)
-
-```cpp
-bbb::opt_arg_function<void(int)> g = [](float x) { std::cout << x << std::endl; };
-```
-
-* convert to std::function
-
-```cpp
-std::function<void(int)> h = g.as<void(int)>();
-```
-
-* convert to std::function with extra arguments (extra arguments will discard)
-
-```cpp
-std::function<void(int, int, float)> i = g;
+	// ignore `const &`
+	bbb::opt_arg_function<void(const std::string &)> f = [](std::string str) { std::cout << str << std::endl; };
+	
+	// call with extra arguments (will be discard)
+	f("hoge", 1, 2, 3, "blah", "brah", "blur");
+	
+	// convert from function need few arguments. (discard args when call it)
+	f = [] { std::cout << "foo" << std::endl; };
+	f("this arg will discards");
+	
+	// convertible type (but sometime you will get warning now...)
+	bbb::opt_arg_function<void(int)> g = [](float x) { std::cout << x << std::endl; };
+	
+	// convert to std::function
+	std::function<void(int)> h1 = g;
+	// explicitly
+	std::function<void(int)> h2 = g.as<void(int)>();
+	
+	// convert to std::function with extra arguments (extra arguments will discard)
+	std::function<void(int, int, float)> i = g;
 ```
 
 ## License
